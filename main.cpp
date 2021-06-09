@@ -395,7 +395,7 @@ bool search(Node* root, int n) {
 //function to return sibling of Node n
 Node* sibling(Node* n) {
 	Node* s = n->getParent();
-	if (!s) {
+	if (s == NULL) {
 		return NULL;
 	}
 	else if (n == s->getLeft()) {
@@ -417,7 +417,7 @@ Node* find_node(Node* root, int n) {
 	else if (n < root->getData()) {
 		return find_node(root->getLeft(), n);
 	}
-	else if (n > root ->getData()) {
+	else {
 		return find_node(root->getRight(), n);
 	}
 	return NULL;
@@ -454,10 +454,10 @@ void remove_node(Node* &root, int n) {
 
 	if (node_to_delete->getColor() == 1) {
 		if (node_to_delete->getParent()) {
-			if (node_to_delete->getParent()->getLeft() == node_to_delete) {
+			if (node_to_delete->getParent()->getLeft() == node_to_delete) { //if node_to_delete is left child
 				node_to_delete->getParent()->setLeft(NULL);
 			}
-			else {
+			else { //if node_to_delete is right child
 				node_to_delete->getParent()->setRight(NULL);
 			}
 		}
@@ -498,7 +498,7 @@ void replace_node(Node* &n, Node* replacement) {
 		if (n == n->getParent()->getLeft()) {
 			n->getParent()->setLeft(replacement);
 		}
-		else if (n == n->getParent()->getRight()) {
+		else {
 			n->getParent()->setRight(replacement);
 		}
 	}
@@ -512,6 +512,7 @@ void replace_node(Node* &n, Node* replacement) {
 
 
 
+//deletion cases--------------------------------------
 
 void del_1(Node* &root, Node* n) {
 	if (n->getParent() != NULL) {
@@ -525,7 +526,7 @@ void del_2(Node* &root, Node* n) {
 	Node* s = sibling(n);
 	if (s->getColor() == 1) {
 		n->getParent()->setColor(1);
-		s->setColor(2);
+		s->setColor(0);
 		if (n == n->getParent() -> getLeft()) {
 			rotate_left(root, n->getParent());
 		}
